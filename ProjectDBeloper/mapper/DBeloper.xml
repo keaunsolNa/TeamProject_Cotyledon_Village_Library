@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd" >
+<properties>
+
+	<entry key="selectLoginManager">
+		SELECT 
+		       MANAGER_NAME
+		     , MANAGER_GRADE  
+		  FROM MANAGER
+		 WHERE MANAGER_ID = ?
+		   AND MANAGER_PWD = ?  
+		   AND MANAGER_DROP_YN = 'N'   	
+	</entry>
+	
+	<entry key="selectLoginMember">
+	    SELECT
+       	 	   MEM_NO
+       	     , MEM_NAME
+       	     , MEM_PHONE
+       	     , MEM_ADDRESS
+       	     , MEM_GRADE_NO
+       	     , MEM_SUM_MONEY
+       	     , MEM_ID
+       	     , MEM_PWD
+       	  FROM MEMBER
+       	 WHERE MEM_ID = ?
+       	   AND MEM_PWD = ? 	
+       	   AND MEM_DROP_YN = 'N'
+	</entry>
+	
+	<entry key="selectMemberForCheck">
+		SELECT
+			   MEM_PHONE
+			 , MEM_ID
+			 , MEM_DROP_YN
+		  FROM MEMBER
+		 WHERE MEM_ID = ?    	
+	</entry>
+	
+	<entry key="selectMemberPhoneForCheck">
+		SELECT 
+			   MEM_PHONE
+			 , MEM_ID
+			 , MEM_DROP_YN
+		  FROM MEMBER
+		 WHERE MEM_PHONE = ? 	   	
+	</entry>
+	
+	<entry key="selectSumManagerSalary">
+	    SELECT
+			   SUM(MANAGER_SALARY)
+		  FROM MANAGER	   
+	</entry>
+	
+	<entry key="selectStoreSalesHistory">
+		SELECT
+		       SSH_SALES_CODE,
+		       SSH_MONEY,
+		       SSH_DBELOPER_DATE,
+		       SSH_INCOME_STATEMENT
+		  FROM STORE_SALES_HISTORY
+		 ORDER BY SSH_DBELOPER_DATE	   	 
+	</entry>
+	
+	<entry key="selectStoreSumMoney">
+		SELECT
+		       STORE_SUM_MONEY
+		  FROM STORE_SUM_MONEY   	 
+	</entry>
+
+	<entry key="selectBook">
+		SELECT
+       		   BOOK_NO
+       	     , BOOK_NAME
+       	     , BOOK_AUTHOR
+       	     , BOOK_PRICE
+       	     , BOOK_SALES_RATE
+       	     , BOOK_STOCK
+       	     , BOOK_PUBLISHER_NAME
+       	     , BOOK_CATEGORY_NUMBER
+       	  FROM BOOK
+       	 WHERE BOOK_NAME = ?
+       	    OR BOOK_AUTHOR = ?
+       	    OR BOOK_CATEGORY_NUMBER = ?
+       	    OR BOOK_EB_NUMBER = ?
+	</entry>
+	
+	<entry key="selectTop3Book">
+		SELECT
+       		   *
+       	  FROM (SELECT BOOK_NO
+       	             , BOOK_NAME
+       	             , BOOK_AUTHOR
+       	             , BOOK_PRICE
+       	             , BOOK_SALES_RATE
+       	             , BOOK_STOCK
+       	             , BOOK_PUBLISHER_NAME
+       	             , BOOK_CATEGORY_NUMBER
+               	  FROM BOOK
+       	         ORDER BY BOOK_SALES_RATE DESC)
+       	 WHERE ROWNUM >= 1
+       	   AND <![CDATA[ROWNUM <= 3]]>
+	</entry>
+	
+	<entry key="selectSumBookPrice">
+		SELECT
+			   (BOOK_PRICE * ?) 총액
+		  FROM BOOK
+		 WHERE BOOK_NO = ? 	   	
+	</entry>
+	
+	<entry key="selectBookByBookStockRowNum">
+		SELECT
+			   BOOK_NO
+			 , BOOK_NAME
+			 , BOOK_STOCK
+		  FROM BOOK
+		 ORDER BY BOOK_STOCK  	  
+	</entry>
+	
+	
+    <entry key="selectMember">
+        SELECT
+			   MEM_NO
+    	     , MEM_NAME
+    	     , MEM_MILEAGE
+    	     , MEM_ID
+    	     , MEM_GRADE_NO
+    	     , MEM_DROP_YN
+    	     , MEM_SUM_MONEY
+ 		  FROM MEMBER
+ 		 WHERE MEM_NO = ?
+ 		    OR MEM_NAME = ?
+ 		    OR MEM_ID = ?
+ 		    OR MEM_GRADE_NO =?
+    </entry>
+	
+	<entry key="selectManager">
+      SELECT
+             MANAGER_NUM
+           , MANAGER_NAME
+           , MANAGER_GRADE
+           , MANAGER_PHONE
+           , MANAGER_ADDRESS
+           , MANAGER_SALARY
+           , MANAGER_DROP_YN
+        FROM MANAGER
+       WHERE MANAGER_NUM = ?
+          OR MANAGER_NAME = ?
+          OR MANAGER_GRADE = ?
+          OR MANAGER_DROP_YN = ?
+   </entry>
+
+    <entry key="selectInputOrderHistory">
+        SELECT
+               INPUT_ORDER_NO
+             , INPUT_BOOK_NAME
+             , INPUT_BOOK_AUTHOR
+             , INPUT_BOOK_PUBLISHER_NAME
+             , INPUT_BOOK_NO
+             , INPUT_NEWBOOK
+          FROM INPUT_ORDER_HISTORY
+         WHERE INPUT_APPROVAL = 'N'
+	</entry>
+	
+	<entry key="selectDaySalesHistory">
+        SELECT
+	    	   SSH_SALES_CODE,
+	    	   SSH_MONEY,
+	    	   SSH_DBELOPER_DATE,
+	    	   SSH_INCOME_STATEMENT
+	      FROM STORE_SALES_HISTORY
+	     WHERE SSH_DBELOPER_DATE LIKE '%' || ? || '%'    	
+    </entry>
+    
+	<entry key="selectOutputOrderHistory">
+	    SELECT
+      	       OUTPUT_ORDER_NO
+  	         , OUTPUT_NUMBER_OF_BOOKS
+  	         , OUTPUT_ORDER_DATE
+ 	         , OUTPUT_BOOK_NO
+  	         , OUTPUT_MEMBER_NO
+  	         , OUTPUT_NONMEMBERS_NO
+ 	      FROM OUTPUT_ORDER_HISTORY
+	     WHERE OUTPUT_APPROVAL = 'N'
+	     ORDER BY OUTPUT_ORDER_DATE
+	</entry>
+	
+	<entry key="selectBookStock">
+        SELECT
+               BOOK_NO
+             , BOOK_NAME
+             , BOOK_AUTHOR
+             , BOOK_PUBLISHER_NAME
+             , BOOK_PRICE
+          FROM BOOK
+         WHERE BOOK_STOCK = 0
+   </entry>
+
+    <entry key="selectDaySalesHistory">
+        SELECT
+	    	   SSH_SALES_CODE,
+	    	   SSH_MONEY,
+	    	   SSH_DBELOPER_DATE,
+	    	   SSH_INCOME_STATEMENT
+	      FROM STORE_SALES_HISTORY
+	     WHERE SSH_DBELOPER_DATE LIKE '%' || ? || '%'	    	
+    </entry>
+	
+	<entry key="selectpurchaseBook">
+	    SELECT DISTINCT A.BOOK_NO
+	         , A.BOOK_NAME 
+		  FROM BOOK A
+  		 INNER JOIN OUTPUT_ORDER_HISTORY B ON (A.BOOK_NO = B.OUTPUT_BOOK_NO)
+  		 INNER JOIN MEMBER C ON (B.OUTPUT_MEMBER_NO = C.MEM_NO)
+  		  LEFT JOIN REVIEW D ON (A.BOOK_NO = D.REVIEW_BOOK_NO)
+ 		 WHERE B.OUTPUT_APPROVAL = 'Y'
+   		   AND C.MEM_NO = ?
+   		   AND D.REVIEW_AWARD IS NULL
+	</entry>
+	
+	<entry key="selectNonMemberInfo">
+		SELECT
+  		       NONMEMBERS_NO
+  		     , NONMEMBERS_NAME
+  		     , NONMEMBERS_PHONE
+  		     , NONMEMBERS_ADDRESS
+  		  FROM NONMEMBERS
+  		 WHERE NONMEMBERS_NAME = ?
+  		   AND NONMEMBERS_PHONE = ?
+  		   AND NONMEMBERS_ADDRESS = ?
+	</entry>
+	
+	<entry key="selectMemNoByOutputHistory">
+	    SELECT
+	          OUTPUT_MEMBER_NO
+	        , OUTPUT_NUMBER_OF_BOOKS  
+	     FROM OUTPUT_ORDER_HISTORY   
+	    WHERE OUTPUT_ORDER_NO = ? 
+	</entry>
+	
+	<entry key="slectBookStockByOutputOrderNo">
+		SELECT
+		       BOOK_STOCK
+		  FROM BOOK A
+	     INNER JOIN OUTPUT_ORDER_HISTORY B ON (A.BOOK_NO = B.OUTPUT_BOOK_NO)
+	     WHERE B.OUTPUT_ORDER_NO = ?    
+	</entry>
+	
+	<entry key="selectMemSumMoney">
+	    SELECT
+		        MEM_SUM_MONEY
+		   FROM MEMBER     
+	      WHERE MEM_NO = ?
+	</entry>
+	
+	<entry key="updateMemberDropYN">
+        UPDATE MEMBER
+		   SET MEM_DROP_YN = 'N'
+		 WHERE MEM_ID = ?
+		   AND MEM_PWD = ?  	
+	</entry>
+	
+    <entry key="updateMemberDrop">
+        UPDATE
+      		   MEMBER A
+      	   SET A.MEM_DROP_YN = 'Y'
+      	 WHERE A.MEM_ID = ?
+      	   AND A.MEM_PWD = ?
+	</entry>
+	
+	<entry key="updateMemberGrade">
+	    UPDATE 
+	    	   MEMBER 
+           SET MEM_GRADE_NO = ?
+         WHERE MEM_NO = ?
+	</entry>
+	
+	<entry key="updateBookStockByManager">
+		UPDATE
+		       BOOK
+		   SET BOOK_STOCK = BOOK_STOCK + ?
+		 WHERE BOOK_NO = ?     
+	</entry>
+	
+	<entry key="updateMemberSumMoney">
+	     UPDATE MEMBER 
+            SET MEM_SUM_MONEY = MEM_SUM_MONEY + (SELECT (A.OUTPUT_NUMBER_OF_BOOKS * B.BOOK_PRICE) 
+            											
+            									   FROM OUTPUT_ORDER_HISTORY A 
+            									  INNER JOIN BOOK B ON (A.OUTPUT_BOOK_NO = B.BOOK_NO)
+            									  WHERE A.OUTPUT_ORDER_NO = ?
+            									) 
+          WHERE MEM_NO = ?
+	</entry>
+	
+	<entry key="UpdateBookStock">
+		UPDATE BOOK
+		   SET BOOK_STOCK = BOOK_STOCK - ?
+		 WHERE BOOK_NO = (SELECT OUTPUT_BOOK_NO FROM OUTPUT_ORDER_HISTORY WHERE OUTPUT_ORDER_NO = ?)
+	</entry>
+	
+	<entry key="updateMemberMileageByReview"> 
+	    UPDATE MEMBER
+	       SET MEM_MILEAGE = MEM_MILEAGE + 500
+	     WHERE MEM_NO = ?   
+	</entry>
+
+
+	<entry key="updateBookSalesRate">
+		UPDATE
+			   BOOK
+		   SET BOOK_SALES_RATE = BOOK_SALES_RATE + ?
+		 WHERE BOOK_NO = (SELECT OUTPUT_BOOK_NO FROM OUTPUT_ORDER_HISTORY WHERE OUTPUT_ORDER_NO = ?)  
+	</entry>
+
+	
+	<entry key="updatememberMileageByPurchase">
+		UPDATE MEMBER
+		   SET MEM_MILEAGE = MEM_MILEAGE + NVL((SELECT ((A.BOOK_PRICE * B.OUTPUT_NUMBER_OF_BOOKS) * D.MG_MILEAGE_PER)
+                                                  FROM BOOK A 
+		   									     INNER JOIN OUTPUT_ORDER_HISTORY B ON (A.BOOK_NO = OUTPUT_BOOK_NO)
+		   									     INNER JOIN MEMBER C ON (B.OUTPUT_MEMBER_NO = C.MEM_NO)
+		   									     INNER JOIN MEMBER_GRADE D ON (C.MEM_GRADE_NO = D.MG_GRADE_NO)
+		   									     WHERE B.OUTPUT_ORDER_NO = ?
+                                                   AND C.MEM_GRADE_NO IS NOT NULL),0) 
+		WHERE MEM_NO = ?
+	</entry>
+	
+	<entry key="updateInputOrderAdim">
+		UPDATE
+		      INPUT_ORDER_HISTORY
+		   SET INPUT_APPROVAL = ? 	
+	</entry>
+	
+	<entry key="updateBookSalesRate">
+		UPDATE
+			   BOOK
+		   SET BOOK_SALES_RATE = BOOK_SALES_RATE + ?
+		 WHERE BOOK_NO = (SELECT OUTPUT_BOOK_NO FROM OUTPUT_ORDER_HISTORY WHERE OUTPUT_ORDER_NO = ?)  
+	</entry>
+	
+	<entry key="updateInputOrderSelectAdim">
+		UPDATE
+		      INPUT_ORDER_HISTORY
+		   SET INPUT_APPROVAL = 'Y'
+		 WHERE INPUT_ORDER_NO = ? 	
+	</entry>
+	
+    <entry key="updateOutputOrderHistoryByOrderNo">
+        UPDATE
+               OUTPUT_ORDER_HISTORY
+           SET OUTPUT_APPROVAL = 'Y'
+           WHERE OUTPUT_ORDER_NO = ?    
+             AND OUTPUT_APPROVAL = 'N' 
+	</entry>	
+	
+	<entry key="insertMemberJoin">
+		INSERT
+		  INTO MEMBER
+	    VALUES
+		(MEM_NO.NEXTVAL, ?, ?, ?
+		, 1000, ?, ?, NULL, DEFAULT, DEFAULT
+		)
+	</entry>
+	
+	<entry key="insertNonmemberJoin">
+		INSERT
+		  INTO NONMEMBERS
+	    VALUES
+		('NM-' || SEQ_NONMEMBERS_NO.NEXTVAL, ?, ?
+		, ?
+		)
+	</entry>
+
+	<entry key="insertsalary">
+        INSERT 
+  		  INTO STORE_SALES_HISTORY 
+  		(
+  		  SSH_SALES_CODE, SSH_MONEY
+  		, SSH_DBELOPER_DATE, SSH_INCOME_STATEMENT
+  		)
+		VALUES
+		('S'||SEQ_STORE_SALES_CODE.NEXTVAL
+		, (SELECT SUM(MANAGER_SALARY) 
+		     FROM MANAGER 
+			WHERE MANAGER_DROP_YN = 'N')
+		, DEFAULT, '월급지급')
+	</entry>
+	
+    <entry key="insertOutputOrderHistory">
+		INSERT
+  		  INTO OUTPUT_ORDER_HISTORY
+  		(
+  		  OUTPUT_ORDER_NO, OUTPUT_BOOK_NO, OUTPUT_ORDER_DATE
+  		, OUTPUT_APPROVAL, OUTPUT_NUMBER_OF_BOOKS, OUTPUT_MEMBER_NO
+  		, OUTPUT_NONMEMBERS_NO
+  		)
+  		VALUES
+  		(
+  		  ('O-' || SEQ_OUTPUT_ORDER_NO.NEXTVAL), ?, DEFAULT
+  		, DEFAULT, ?, ?
+  		, NULL
+  		)
+    </entry>
+   
+    <entry key="insertNonmemberOutputOrderHistory">
+        INSERT
+  		  INTO OUTPUT_ORDER_HISTORY
+  		(
+  		  OUTPUT_ORDER_NO, OUTPUT_BOOK_NO, OUTPUT_ORDER_DATE
+  		, OUTPUT_APPROVAL, OUTPUT_NUMBER_OF_BOOKS, OUTPUT_MEMBER_NO
+  		, OUTPUT_NONMEMBERS_NO
+  		)
+  		VALUES
+  		(
+  		  ('O-' || SEQ_OUTPUT_ORDER_NO.NEXTVAL), ?, DEFAULT
+  		, DEFAULT, ?, NULL
+  		, ?
+  		)
+    </entry>
+
+    <entry key="insertReview">
+	    INSERT 
+	      INTO REVIEW 
+	    (REVIEW_NO, REVIEW_MEM_NO, REVIEW_BOOK_NO, REVIEW_CONTENTS, REVIEW_AWARD)  
+	    VALUES 
+	    (SEQ_REVIEW.NEXTVAL, ?, ?, ?, DEFAULT)
+	</entry>
+	
+	<entry key="insertStoreSalesHistoryByOutput">
+		INSERT
+		  INTO STORE_SALES_HISTORY
+		(
+		  SSH_SALES_CODE
+		, SSH_MONEY
+		, SSH_DBELOPER_DATE
+		, SSH_INCOME_STATEMENT  
+		)
+		VALUES
+		(
+		  'S'||SEQ_STORE_SALES_CODE.NEXTVAL
+		, (SELECT
+		  	   	  (A.OUTPUT_NUMBER_OF_BOOKS * B.BOOK_PRICE) 
+		     FROM OUTPUT_ORDER_HISTORY A
+		    INNER JOIN BOOK B ON (A.OUTPUT_BOOK_NO = B.BOOK_NO)
+		    WHERE A.OUTPUT_ORDER_NO = ?)
+		, DEFAULT
+		, '입금'  
+		)  
+	</entry>
+	
+	<entry key="InsertStoreSalesHistoryByInput">
+		INSERT
+		  INTO STORE_SALES_HISTORY
+		(
+		  SSH_SALES_CODE
+		, SSH_MONEY
+		, SSH_DBELOPER_DATE
+		, SSH_INCOME_STATEMENT  
+		)
+		VALUES
+		(
+		  'S'||SEQ_STORE_SALES_CODE.NEXTVAL
+		, ?
+		, DEFAULT
+		, '출금'  
+		)  
+	</entry>
+	
+	<entry key="insertStoreSalesHistoryByInput">
+		INSERT
+		  INTO STORE_SALES_HISTORY
+		(
+		  SSH_SALES_CODE
+		, SSH_MONEY
+		, SSH_DBELOPER_DATE
+		, SSH_INCOME_STATEMENT  
+		)
+		VALUES
+		(
+		  'S'||SEQ_STORE_SALES_CODE.NEXTVAL
+		, ?
+		, DEFAULT
+		, '출금'  
+		)  
+	</entry>
+	
+	<entry key="insertOrderExist">
+          INSERT
+            INTO INPUT_ORDER_HISTORY
+          (
+               INPUT_ORDER_NO
+             , INPUT_BOOK_NO
+             , INPUT_BOOK_NAME
+             , INPUT_BOOK_AUTHOR
+             , INPUT_BOOK_PUBLISHER_NAME
+             , INPUT_APPROVAL  
+             , INPUT_NEWBOOK    
+          )
+          VALUES
+          (
+            CONCAT('I-', SEQ_INPUT_ORDER_NO.NEXTVAL)
+            , ?
+            , ?
+            , ?
+            , ?
+            , DEFAULT
+            , 'N'
+          ) 
+   </entry>
+   
+    <entry key="insertOrderNew">
+          INSERT
+            INTO INPUT_ORDER_HISTORY
+          (
+               INPUT_ORDER_NO
+             , INPUT_BOOK_NO
+             , INPUT_BOOK_NAME
+             , INPUT_BOOK_AUTHOR
+             , INPUT_BOOK_PUBLISHER_NAME
+             , INPUT_APPROVAL
+             , INPUT_NEWBOOK    
+          )
+          VALUES
+          (
+            CONCAT('I-', SEQ_INPUT_ORDER_NO.NEXTVAL)
+            , NULL
+            , ?
+            , ?
+            , ?
+            , DEFAULT
+            , 'Y'
+          ) 
+   </entry>
+   
+	<entry key="updateUseMileage">
+		UPDATE
+     		   MEMBER
+  		  SET  MEM_MILEAGE = MEM_MILEAGE - (SELECT
+                                          		   MILEAGE_PRODUCTPRICE
+                                      		  FROM MILEAGE
+                                    		 WHERE MILEAGE_PRODUCTNO = ?)
+        WHERE MEM_NO = ?
+	</entry>
+	
+	<entry key="selectMemMileage">
+		SELECT
+       		   MEM_MILEAGE
+ 		  FROM MEMBER
+ 		 WHERE MEM_NO = ?
+	</entry>
+	
+	<entry key="insertNewBook">
+	
+		INSERT
+		  INTO BOOK
+		(
+		  BOOK_NO, BOOK_NAME, BOOK_AUTHOR, BOOK_PRICE
+		, BOOK_PUBLISHING_DATE, BOOK_STOCK, BOOK_SALES_RATE
+		, BOOK_PUBLISHER_NAME, BOOK_EB_NUMBER, BOOK_CATEGORY_NUMBER
+		)
+		VALUES
+		(
+		  SEQ_BOOK.NEXTVAL, ? , ? , ? 
+		, TO_DATE( ? ,'YY-MM-DD') , ? , DEFAULT
+		, ? , ? , ?
+		)
+	
+	</entry>
+	<entry key="insertBuyNewbookInSalesHistory">
+	      INSERT
+        INTO STORE_SALES_HISTORY
+      (
+        SSH_SALES_CODE
+      , SSH_MONEY
+      , SSH_DBELOPER_DATE
+      , SSH_INCOME_STATEMENT  
+      )
+      VALUES
+      (
+        'S'||SEQ_STORE_SALES_CODE.NEXTVAL
+      , (SELECT
+                   A.BOOK_STOCK * A.BOOK_PRICE 
+           FROM BOOK A
+           WHERE 1=1 AND A.BOOK_NO = (SELECT MAX(BOOK_NO) FROM BOOK))
+      , DEFAULT
+      , ?  
+      )
+	</entry>
+	
+	<entry key="selectAllBookStock">
+		SELECT
+			   BOOK_NO
+       		 , BOOK_STOCK
+       	  FROM BOOK
+	</entry>
+	
+	<entry key="selectReview">
+		SELECT
+       		   B.BOOK_NAME AS "BOOK_NAME"
+       	     , A.REVIEW_CONTENTS AS "REVIEW"
+       	  FROM REVIEW A
+       	  JOIN BOOK B ON (A.REVIEW_BOOK_NO = B.BOOK_NO)
+       	 WHERE A.REVIEW_BOOK_NO = ?
+       	    OR A.REVIEW_MEM_NO = ?
+	</entry>
+	
+
+	<entry key="updateManagerReturn">
+	    UPDATE MANAGER
+  	       SET MANAGER_DROP_YN = 'N'
+ 	     WHERE MANAGER_DROP_YN = 'Y'
+ 	     	   AND MANAGER_NUM = ?
+	</entry>
+	
+	<entry key="selectReturnManager">
+      SELECT
+             MANAGER_NUM
+           , MANAGER_NAME
+           , MANAGER_GRADE
+           , MANAGER_PHONE
+           , MANAGER_ADDRESS
+           , MANAGER_SALARY
+           , MANAGER_DROP_YN
+        FROM MANAGER
+       WHERE MANAGER_DROP_YN = 'Y'
+   </entry>
+   
+	<entry key="updateBookStockByInputOrder">
+		UPDATE BOOK                    
+  		   SET BOOK_STOCK = (SELECT B.BOOK_STOCK + 1    											
+                      		   FROM INPUT_ORDER_HISTORY A 
+                     		  INNER JOIN BOOK B ON (A.INPUT_BOOK_NO = B.BOOK_NO)
+                    		  WHERE A.INPUT_ORDER_NO = ?
+                    		 )
+         WHERE BOOK_NO = ?
+	</entry>
+	
+	<entry key="selectBookNoByInputOrderHistory">
+        SELECT
+               INPUT_BOOK_NO
+          FROM INPUT_ORDER_HISTORY
+         WHERE INPUT_ORDER_NO = ?
+	</entry>
+	
+	<entry key="acceptBookInputOrderHistory">
+        UPDATE
+               INPUT_ORDER_HISTORY
+           SET INPUT_APPROVAL = 'Y'
+           WHERE INPUT_ORDER_NO = ?    
+             AND INPUT_APPROVAL = 'N' 
+	</entry>
+	
+	<entry key="selectBookInputOrderHistory">
+        SELECT
+               INPUT_ORDER_NO
+             , INPUT_BOOK_NAME
+             , INPUT_BOOK_AUTHOR
+             , INPUT_BOOK_PUBLISHER_NAME
+             , INPUT_BOOK_NO
+          FROM INPUT_ORDER_HISTORY
+         WHERE INPUT_APPROVAL = 'N'
+           AND INPUT_NEWBOOK = 'N'
+	</entry>
+	
+	<entry key="WithdrawStoreInputOrderHistory">
+	INSERT 
+  	  INTO STORE_SALES_HISTORY
+	(
+  	  SSH_SALES_CODE, SSH_MONEY
+	, SSH_DBELOPER_DATE, SSH_INCOME_STATEMENT
+	)
+	VALUES
+	(
+  	'S'||SEQ_STORE_SALES_CODE.NEXTVAL, (SELECT
+       											B.BOOK_PRICE
+  										  FROM INPUT_ORDER_HISTORY A
+ 										 INNER JOIN BOOK B ON (A.INPUT_BOOK_NO = B.BOOK_NO)
+ 										 WHERE A.INPUT_ORDER_NO = ?)
+	, DEFAULT, '출금'
+	)
+	</entry>
+	
+	<entry key="selectMaxBookNo">
+		SELECT
+       		   MAX(BOOK_NO)
+       	  FROM BOOK
+	</entry>
+	
+</properties>
